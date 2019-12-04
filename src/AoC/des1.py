@@ -62,3 +62,7 @@ def solve11(path: str = 'assets/des1.1.txt') -> int:
 def solve12(path: str = 'assets/des1.1.txt') -> int:
     fc = FuelCalculator.input_to_masses(path)
     return fc.total_fuel()
+
+if __name__ == "__main__":
+    print(f"solve 1.1: {solve11()}")
+    print(f"solve 1.2: {solve12()}")

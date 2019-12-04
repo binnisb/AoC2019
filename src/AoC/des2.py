@@ -60,3 +60,7 @@ def solve22(path: str = 'assets/des2.1.txt') -> int:
         
 
     return 100*i + j
+
+if __name__ == "__main__":
+    print(f"solve 2.1: {solve21()}")
+    print(f"solve 2.2: {solve22()}")
