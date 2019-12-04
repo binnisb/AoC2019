@@ -22,6 +22,18 @@ class Point(object):
 
         return cls(Direction(d), l)
 
+    def shift_point(self,x,y,step):
+        if self.direction is Direction.R:
+            return x + step, y
+        elif self.direction is Direction.L:
+            return x - step, y
+        elif self.direction is Direction.U:
+            return x, y + step
+        elif self.direction is Direction.D:
+            return x, y - step
+        else:
+            raise ValueError("Strange")
+
 def _wire_converter(wire: Union[List[str], List[Point], str]) -> List[Point]:
     if type(wire) in (list, tuple):
         return [w if type(w) is Point else Point.from_str(w.strip()) for w in wire]
@@ -32,7 +44,7 @@ def _wire_converter(wire: Union[List[str], List[Point], str]) -> List[Point]:
 class Grid(object):
     wire1: List[Point] = attr.ib(converter=_wire_converter)
     wire2: List[Point] = attr.ib(converter=_wire_converter)
-    grid: dict = attr.ib(init=False)
+    grid: tuple = attr.ib(init=False)
     
     @grid.default
     def _grid_default(self):
@@ -43,22 +55,12 @@ class Grid(object):
             current_y = 0
             steps = 0
             for point in wire:
-                for x in range(1,point.length+1):
+                for i in range(1, point.length + 1):
+                    key = point.shift_point(current_x, current_y, i)
                     steps += 1
-                    if point.direction is Direction.R:
-                        current_x += 1
-                        key = (current_x,current_y)
-                    elif point.direction is Direction.L:
-                        current_x -= 1
-                        key = (current_x,current_y)
-                    elif point.direction is Direction.U:
-                        current_y += 1
-                        key = (current_x ,current_y)
-                    elif point.direction is Direction.D:
-                        current_y -= 1
-                        key = (current_x ,current_y)
-                    if not key in wire_path:
+                    if key not in wire_path:                    
                         wire_path[key] = steps
+                current_x, current_y = key
             wire_paths[name] = wire_path
         return wire_paths
 
