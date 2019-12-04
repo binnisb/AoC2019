@@ -46,24 +46,19 @@ class Grid(object):
                 for x in range(1,point.length+1):
                     steps += 1
                     if point.direction is Direction.R:
-                        key = (current_x + x ,current_y)
+                        current_x += 1
+                        key = (current_x,current_y)
                     elif point.direction is Direction.L:
-                        key = (current_x - x ,current_y)
+                        current_x -= 1
+                        key = (current_x,current_y)
                     elif point.direction is Direction.U:
-                        key = (current_x ,current_y + x)
+                        current_y += 1
+                        key = (current_x ,current_y)
                     elif point.direction is Direction.D:
-                        key = (current_x ,current_y - x)
-                        
+                        current_y -= 1
+                        key = (current_x ,current_y)
                     if not key in wire_path:
                         wire_path[key] = steps
-                if point.direction is Direction.R:
-                    current_x += point.length
-                elif point.direction is Direction.L:
-                    current_x -= point.length
-                elif point.direction is Direction.U:
-                    current_y += point.length
-                elif point.direction is Direction.D:
-                    current_y -= point.length
             wire_paths[name] = wire_path
         return wire_paths
 

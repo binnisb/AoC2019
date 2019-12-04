@@ -13,8 +13,16 @@ def calc(mass, sub_mass=False):
             return fuel
 
 def calc_fuel(masses, sub_mass=False):
+    def mass_to_int(m):
+        if type(m) is int:
+            return m
+        elif type(m) is str:
+            return m.strip()
+        else:
+            raise ValueError("mass should be int or string")
+            
     return pipe(masses,
-                map(str.strip),
+                map(mass_to_int),
                 map(int),
                 map(calc(sub_mass=sub_mass)),
                 reduce(add))   
