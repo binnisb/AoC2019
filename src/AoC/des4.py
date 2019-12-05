@@ -1,15 +1,13 @@
-from collections import Counter
-from cytoolz.curried import pipe, map, reduce, filter
+from cytoolz.curried import pipe, map, reduce, filter, frequencies, count
 from operator import add
 
 def count_pw(low,high, handle_large_groups):
     return pipe(
         range(int(low), int(high)+1),
         map(str),
-        filter(lambda x: sorted(x) == list(x)),
-        map(Counter),
-        map(lambda x: x.values()),
-        map(handle_large_groups),
+        filter(lambda x: "".join(sorted(x)) == x),
+        map(frequencies),
+        map(lambda x: handle_large_groups(x.values())),
         reduce(add)
     )
 
