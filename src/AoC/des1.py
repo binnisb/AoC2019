@@ -1,4 +1,8 @@
-from cytoolz.curried import pipe, map, reduce, curry
+try:
+    import cytoolz as toolz
+except:
+    import pytoolz as toolz
+from toolz.curried import pipe, map, reduce, curry
 from operator import add
 
 @curry
