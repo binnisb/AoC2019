@@ -1,5 +1,7 @@
 pytest==5.0.1
 attrs
 numpy
-cytools;platform_system!="Windows"
+cytoolz;platform_system!="Windows"
 pytoolz
+networkx
+seaborn
